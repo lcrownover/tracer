@@ -48,10 +48,10 @@ func main() {
 		Name: "traceme_value",
 		Help: "Value of the traceme app",
 	})
-	recordTracemeMetrics(tracemeGuage, 2)
+	recordTracemeMetrics(tracemeGuage, 5)
 
     // Expose the registered metrics via HTTP.
 	http.Handle("/metrics", promhttp.Handler())
-    log.Println("starting server on port 2112")
-	http.ListenAndServe(":2112", nil)
+    log.Println("starting server on port 80")
+	http.ListenAndServe(":80", nil)
 }
