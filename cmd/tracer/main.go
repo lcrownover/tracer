@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-    "time"
+    // "time"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
