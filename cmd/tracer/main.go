@@ -28,27 +28,30 @@ func getTracemeValue() int {
 	return val
 }
 
-func recordMetrics() {
+// recordTracemeMetrics is a function that will run in a goroutine and will
+// periodically scrape the traceme app and set the value of the gauge
+func recordTracemeMetrics(g prometheus.Gauge, interval int) {
 	go func() {
 		for {
-            v := getTracemeValue()
-            trace
-			time.Sleep(2 * time.Second)
+			log.Println("scraping traceme value")
+			v := getTracemeValue()
+			g.Set(float64(v))
+			time.Sleep(time.Duration(interval) * time.Second)
 		}
 	}()
 }
 
-var (
-	tracemeGuage = promauto.NewGauge(prometheus.GaugeOpts{
+func main() {
+    // Create a new gauge. 
+    // A gauge is a metric that represents a single numerical value that can arbitrarily go up and down.
+	tracemeGuage := promauto.NewGauge(prometheus.GaugeOpts{
 		Name: "traceme_value",
 		Help: "Value of the traceme app",
 	})
-)
+	recordTracemeMetrics(tracemeGuage, 2)
 
-func main() {
-	recordMetrics()
-
+    // Expose the registered metrics via HTTP.
 	http.Handle("/metrics", promhttp.Handler())
+    log.Println("starting server on port 2112")
 	http.ListenAndServe(":2112", nil)
 }
-
