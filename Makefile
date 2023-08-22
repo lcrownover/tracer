@@ -3,6 +3,9 @@
 all:
 	@go build -o bin/tracer cmd/tracer/main.go
 
+run:
+	@go run cmd/tracer/main.go
+
 install:
 	@cp bin/tracer /usr/local/bin/tracer
 
