@@ -14,6 +14,7 @@ import (
 
 // getTracemeValue is a function that will scrape the traceme app and return
 // the value as a float64, since that is what the GaugeFunc expects
+// it's pretty straightforward, as the traceme app just returns a number
 func getTracemeValue() float64 {
 	log.Println("getting traceme value")
 	resp, err := http.Get("http://traceme.westus2.azurecontainer.io:3333")
